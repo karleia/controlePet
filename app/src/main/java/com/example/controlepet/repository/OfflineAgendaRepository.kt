@@ -8,6 +8,7 @@ import com.example.controlepet.model.PetWithClientName
 import com.example.controlepet.model.Service
 import kotlinx.coroutines.flow.Flow
 
+
 class OfflineAgendaRepository(
     private val agendaDAO: AgendaDAO,
 ): AgendaRepository {
@@ -51,7 +52,7 @@ class OfflineAgendaRepository(
         return agendaDAO.getAllAgendasCompletas()
     }
 
-    suspend fun updateAgendaWithServices(agenda: Agenda, servicos: List<AgendaServices>) {
+    override suspend fun updateAgendaWithServices(agenda: Agenda, servicos: List<AgendaServices>) {
         agendaDAO.update(agenda)
         agendaDAO.deleteServicesByAgendaId(agenda.id)
         agendaDAO.insertAgendaServices(servicos.map { it.copy(idAgenda = agenda.id) })

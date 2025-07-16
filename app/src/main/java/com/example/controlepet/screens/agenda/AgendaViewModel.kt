@@ -20,10 +20,11 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import com.example.controlepet.model.ServiceSelecionado
+import com.example.controlepet.repository.AgendaRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class AgendaViewModel(
-    private val repo: OfflineAgendaRepository,
+    private val repo: AgendaRepository,
 ): ViewModel() {
 
     val petList: StateFlow<List<PetWithClientName>> =

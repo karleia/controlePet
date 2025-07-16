@@ -34,4 +34,6 @@ interface AgendaRepository {
     suspend fun getAgendaCompleta(agendaId: Int): AgendaCompleta?
 
     fun getAllAgendasCompletas(): Flow<List<AgendaCompleta>>
+
+    suspend fun updateAgendaWithServices(agenda: Agenda, servicos: List<AgendaServices>)
 }

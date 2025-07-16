@@ -40,17 +40,18 @@ import java.util.Locale
 fun PerfilAgendaScreen(
     paddingValues: PaddingValues,
     navController: NavController,
-    agendaId: Int
+    agendaId: Int,
+    vm: PerfilAgendaViewModel // recebe o ViewModel por parâmetro
 ) {
-    val context = LocalContext.current
+    val agendaCompleta by vm.agendaCompleta.collectAsState()
+
+    /*val context = LocalContext.current
     val db = remember { AppDatabase.getDatabase(context) }
     val repo = remember { OfflineAgendaRepository(db.AgendaDAO()) }
     val factory = remember { AgendaViewModelFactory(repo, agendaId) }
     val errorMessage = remember { mutableStateOf<String?>(null) }
-
     val vm: PerfilAgendaViewModel = provideViewModel(factory)
-
-    val agendaCompleta by vm.agendaCompleta.collectAsState()
+    val agendaCompleta by vm.agendaCompleta.collectAsState()*/
 
     LaunchedEffect(agendaId) {
         vm.loadAgendaCompleta(agendaId)
@@ -98,6 +99,7 @@ fun PerfilAgendaScreen(
                 servicos?.forEach { servicoInfo ->
                     val servico = servicoInfo.servico
                     val preco = servicoInfo.agendaService.price
+                    println(servicoInfo)
                     LabelWithValue(servico.name, "(R$ ${"%.2f".format(preco)})")
                 }
 

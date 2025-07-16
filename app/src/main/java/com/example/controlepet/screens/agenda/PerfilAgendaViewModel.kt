@@ -4,13 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.controlepet.model.AgendaCompleta
 import com.example.controlepet.model.PetWithClientName
+import com.example.controlepet.repository.AgendaRepository
 import com.example.controlepet.repository.OfflineAgendaRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class PerfilAgendaViewModel(
-    private val repo: OfflineAgendaRepository,
+    private val repo: AgendaRepository,
     agendaId: Int
 ): ViewModel() {
 

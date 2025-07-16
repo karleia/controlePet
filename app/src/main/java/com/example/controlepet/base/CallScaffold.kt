@@ -43,6 +43,7 @@ import com.example.controlepet.screens.services.ListServiceScreen
 import com.example.controlepet.screens.services.ListServiceViewModel
 import com.example.controlepet.screens.services.ServicesScreen
 import com.example.controlepet.screens.agenda.PerfilAgendaScreen
+import com.example.controlepet.screens.agenda.PerfilAgendaViewModel
 
 
 class CallScaffold(val navController: NavController) {
@@ -202,7 +203,12 @@ class CallScaffold(val navController: NavController) {
                     AgendaScreen(padding, navController, agendaIdToEdit = idEdit ?: 0)
                 }
                 Routes.PerfilAgendaScreen.route -> {
-                    PerfilAgendaScreen(padding, navController, agendaId = idEdit ?: 0)
+                    val context = LocalContext.current
+                    val db = remember { AppDatabase.getDatabase(context) }
+                    val repo = remember { OfflineAgendaRepository(db.AgendaDAO()) }
+                    val factory = remember { AgendaViewModelFactory(repo, 0) }
+                    val viewModel: PerfilAgendaViewModel = viewModel(factory = factory)
+                    PerfilAgendaScreen(padding, navController, agendaId = idEdit ?: 0, viewModel)
                 }
                 Routes.ListAgendaScreen.route -> {
                     val context = LocalContext.current

@@ -3,6 +3,7 @@ package com.example.controlepet.screens.agenda
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.controlepet.model.AgendaCompleta
+import com.example.controlepet.repository.AgendaRepository
 import com.example.controlepet.repository.OfflineAgendaRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +14,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class ListAgendaViewModel(
-    private val repo: OfflineAgendaRepository
+    private val repo: AgendaRepository
 ): ViewModel() {
 
     val agendaList: StateFlow<List<AgendaCompleta>> = repo.getAllAgendasCompletas()
