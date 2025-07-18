@@ -23,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.controlepet.base.Routes
 import com.example.controlepet.components.DividerLabel
@@ -41,17 +42,9 @@ fun PerfilAgendaScreen(
     paddingValues: PaddingValues,
     navController: NavController,
     agendaId: Int,
-    vm: PerfilAgendaViewModel // recebe o ViewModel por parâmetro
+    vm: PerfilAgendaViewModel
 ) {
     val agendaCompleta by vm.agendaCompleta.collectAsState()
-
-    /*val context = LocalContext.current
-    val db = remember { AppDatabase.getDatabase(context) }
-    val repo = remember { OfflineAgendaRepository(db.AgendaDAO()) }
-    val factory = remember { AgendaViewModelFactory(repo, agendaId) }
-    val errorMessage = remember { mutableStateOf<String?>(null) }
-    val vm: PerfilAgendaViewModel = provideViewModel(factory)
-    val agendaCompleta by vm.agendaCompleta.collectAsState()*/
 
     LaunchedEffect(agendaId) {
         vm.loadAgendaCompleta(agendaId)

@@ -1,7 +1,10 @@
 package com.example.controlepet
 
+import com.example.controlepet.model.Agenda
+import com.example.controlepet.model.AgendaCompleta
+import com.example.controlepet.model.Pet
 import com.example.controlepet.screens.agenda.PerfilAgendaViewModel
-import com.example.controlepet.testdoubles.FakeAgendaRepository
+import com.example.controlepet.test.FakeAgendaRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -18,8 +21,31 @@ import org.junit.Test
 class PerfilAgendaViewModelTest {
 
     private val fixedTime = System.currentTimeMillis()
-    val fakeRepo = FakeAgendaRepository(fixedTime)
+    val mockAgendaCompleta = AgendaCompleta(
+        agenda = Agenda(
+            id = 1,
+            idPet = 1,
+            date_time = fixedTime,
+            createdAt = fixedTime,
+            observation = "Teste"
+        ),
+        pet = Pet(
+            id = 1,
+            clientId = 1,
+            name = "Mock Pet",
+            typePet = "cachorro",
+            breed = "Pincher",
+            color = "preto",
+            pelagem = "curta",
+            sex = "femea",
+            observation = "Nenhuma"
+        ),
+        clientName = "Cliente Mock",
+        servicosSelecionados = emptyList()
+    )
+    val fakeRepo = FakeAgendaRepository(fixedTime, agendasMock = listOf(mockAgendaCompleta))
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private val testDispatcher = StandardTestDispatcher()
 
     @Before
@@ -34,7 +60,6 @@ class PerfilAgendaViewModelTest {
 
     @Test
     fun `loadAgendaCompleta updates state`() = runTest {
-
         val vm = PerfilAgendaViewModel(fakeRepo, agendaId = 1)
         vm.loadAgendaCompleta(1)
         testDispatcher.scheduler.advanceUntilIdle()
@@ -43,7 +68,7 @@ class PerfilAgendaViewModelTest {
         assertNotNull(agendaCompleta)
         assertEquals(fixedTime, agendaCompleta?.agenda?.date_time)
         assertEquals("Mock Pet", agendaCompleta?.pet?.name)
-        assertEquals("pincher", agendaCompleta?.pet?.breed)
+        assertEquals("Pincher", agendaCompleta?.pet?.breed)
         assertEquals("curta", agendaCompleta?.pet?.pelagem)
         assertEquals("Cliente Mock", agendaCompleta?.clientName)
     }

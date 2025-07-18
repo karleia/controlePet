@@ -10,19 +10,18 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class PerfilAgendaViewModel(
+open class PerfilAgendaViewModel(
     private val repo: AgendaRepository,
     agendaId: Int
 ): ViewModel() {
 
-    private val _agendaCompleta = MutableStateFlow<AgendaCompleta?>(null)
-    val agendaCompleta: StateFlow<AgendaCompleta?> = _agendaCompleta
+    internal val _agendaCompleta = MutableStateFlow<AgendaCompleta?>(null)
+    open val agendaCompleta: StateFlow<AgendaCompleta?> = _agendaCompleta
 
-    fun loadAgendaCompleta(id: Int) {
+    open fun loadAgendaCompleta(id: Int) {
         viewModelScope.launch {
             val agenda = repo.getAgendaCompleta(id)
             _agendaCompleta.value = agenda
         }
     }
-
 }

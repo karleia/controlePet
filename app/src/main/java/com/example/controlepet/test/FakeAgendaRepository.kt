@@ -1,4 +1,4 @@
-package com.example.controlepet.testdoubles
+package com.example.controlepet.test
 
 import com.example.controlepet.model.Agenda
 import com.example.controlepet.model.AgendaCompleta
@@ -8,11 +8,17 @@ import com.example.controlepet.model.PetWithClientName
 import com.example.controlepet.model.Service
 import com.example.controlepet.repository.AgendaRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 
 class FakeAgendaRepository(
-    private val fixedTime: Long
+    private val fixedTime: Long,
+    private val agendasMock: List<AgendaCompleta> = emptyList()
 ) : AgendaRepository {
+
+    val deletedIds = mutableListOf<Int>()
+
+    private val agendasFlow = MutableStateFlow(agendasMock)
 
     override fun getAll(): Flow<List<Agenda>> = flowOf(emptyList())
 
@@ -28,7 +34,9 @@ class FakeAgendaRepository(
 
     override suspend fun deleteAgenda(agenda: Agenda) {}
 
-    override suspend fun deleteAgendaById(id: Int) {}
+    override suspend fun deleteAgendaById(id: Int) {
+        deletedIds.add(id)
+    }
 
     override suspend fun updateAgenda(agenda: Agenda) {}
 
@@ -36,7 +44,7 @@ class FakeAgendaRepository(
 
     override fun getAllService(): Flow<List<Service>> = flowOf(emptyList())
 
-    override suspend fun getAgendaCompleta(agendaId: Int): AgendaCompleta? {
+    /*override suspend fun getAgendaCompleta(agendaId: Int): AgendaCompleta? {
         return AgendaCompleta(
             agenda = Agenda(
                 id = agendaId,
@@ -59,9 +67,18 @@ class FakeAgendaRepository(
             clientName = "Cliente Mock",
             servicosSelecionados = listOf()
         )
+    }*/
+
+    override suspend fun getAgendaCompleta(agendaId: Int): AgendaCompleta? {
+        return agendasMock.find { it.agenda.id == agendaId }
     }
 
-    override fun getAllAgendasCompletas(): Flow<List<AgendaCompleta>> = flowOf(emptyList())
+    /*override fun getAllAgendasCompletas(): Flow<List<AgendaCompleta>> {
+        return flowOf(
+            agendasMock.filterNot { deletedIds.contains(it.agenda.id) }
+        )
+    }*/
+    override fun getAllAgendasCompletas(): Flow<List<AgendaCompleta>> = agendasFlow
 
     override suspend fun updateAgendaWithServices(agenda: Agenda, servicos: List<AgendaServices>) {
         // não implementado para testes simples
