@@ -40,7 +40,6 @@ class AgendaViewModel(
 
     var errorMessage by mutableStateOf<String?>(null)
     var isSuccess by mutableStateOf(false)
-        private set
 
     var dataHoraSelecionada by mutableStateOf(0L)
     var dataHoraFormatada by mutableStateOf("")
