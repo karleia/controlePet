@@ -29,6 +29,7 @@ import com.example.controlepet.helpers.pet.PetViewModelFactory
 import com.example.controlepet.helpers.provideViewModel
 import com.example.controlepet.repository.OfflineClientRepository
 import com.example.controlepet.repository.OfflinePetRepository
+import com.example.controlepet.viewModel.pets.PerfilPetViewModel
 
 @Composable
 fun PerfilPetScreen(

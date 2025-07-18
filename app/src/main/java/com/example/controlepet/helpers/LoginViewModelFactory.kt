@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.controlepet.dataBase.UserPreferences
 import com.example.controlepet.repository.OfflineUserRepository
-import com.example.controlepet.screens.login.LoginViewModel
+import com.example.controlepet.viewModel.login.LoginViewModel
 
 class LoginViewModelFactory(
     private val repository: OfflineUserRepository,

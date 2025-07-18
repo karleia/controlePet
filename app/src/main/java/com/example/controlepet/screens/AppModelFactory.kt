@@ -3,7 +3,7 @@ package com.example.controlepet.screens
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.controlepet.repository.OfflineUserRepository
-import com.example.controlepet.screens.registerUser.RegisterUserViewModel
+import com.example.controlepet.viewModel.cadastroUsuario.RegisterUserViewModel
 
 class AppModelFactory(
     private val repository: OfflineUserRepository

@@ -5,7 +5,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.controlepet.dataBase.AppDatabase
 import com.example.controlepet.repository.OfflineUserRepository
-import com.example.controlepet.screens.registerUser.RegisterUserViewModel
+import com.example.controlepet.viewModel.cadastroUsuario.RegisterUserViewModel
 
 @Composable
 fun provideRegisterUserViewModel(): RegisterUserViewModel {

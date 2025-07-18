@@ -42,6 +42,7 @@ import com.example.controlepet.dataBase.AppDatabase
 import com.example.controlepet.dataBase.UserPreferences
 import com.example.controlepet.helpers.LoginViewModelFactory
 import com.example.controlepet.repository.OfflineUserRepository
+import com.example.controlepet.viewModel.login.LoginViewModel
 
 @Composable
 fun LoginScreen(paddingValues: PaddingValues, navController: NavController) {

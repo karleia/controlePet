@@ -21,7 +21,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -48,6 +47,7 @@ import com.example.controlepet.helpers.agenda.AgendaViewModelFactory
 import com.example.controlepet.helpers.provideViewModel
 import com.example.controlepet.repository.OfflineAgendaRepository
 import com.example.controlepet.model.ServiceSelecionado
+import com.example.controlepet.viewModel.agenda.AgendaViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -62,16 +62,17 @@ data class PetItemDisplay(
 fun AgendaScreen(
     paddingValues: PaddingValues,
     navController: NavController,
-    agendaIdToEdit: Int = 0
+    agendaIdToEdit: Int = 0,
+    vm: AgendaViewModel
 ) {
     val context = LocalContext.current
-    val db = remember { AppDatabase.getDatabase(context) }
+    /*val db = remember { AppDatabase.getDatabase(context) }
     val repo = remember { OfflineAgendaRepository(db.AgendaDAO()) }
     val factory = remember {  AgendaViewModelFactory(repo, agendaIdToEdit) }
-    val vm:  AgendaViewModel = provideViewModel(factory)
+    val vm: AgendaViewModel = provideViewModel(factory)*/
 
     //para o dropdow mostrar o nome do pet com o nome do dono no formato (pet - dono)
-    val pets by vm.petList.collectAsState()
+    val pets by vm.listaPets.collectAsState()
     val listaPets = pets.map {
         PetItemDisplay(id = it.pet.id, display = "${it.pet.name} - ${it.clientName}")
     }
@@ -92,11 +93,12 @@ fun AgendaScreen(
 
     var serviceSelected by remember { mutableStateOf("") }
 
-    //mensagem de erro
-    val isSuccess by remember { derivedStateOf { vm.isSuccess } }
+    //mensagem de sucesso
+    val isSuccess = vm.isSuccess
 
     //formatar a data e a hora
-    var timestampSelecionado by remember { mutableStateOf(vm.dataHoraSelecionada) }
+    var timestampSelecionado = vm.dataHoraSelecionada
+
     val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
     val textoDataHora = if (timestampSelecionado > 0L) { formatter.format(Date(timestampSelecionado)) } else {  "" }
 

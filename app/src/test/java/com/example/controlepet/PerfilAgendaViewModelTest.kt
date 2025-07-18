@@ -3,7 +3,7 @@ package com.example.controlepet
 import com.example.controlepet.model.Agenda
 import com.example.controlepet.model.AgendaCompleta
 import com.example.controlepet.model.Pet
-import com.example.controlepet.screens.agenda.PerfilAgendaViewModel
+import com.example.controlepet.viewModel.agenda.PerfilAgendaViewModel
 import com.example.controlepet.test.FakeAgendaRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

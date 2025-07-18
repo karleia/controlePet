@@ -4,7 +4,7 @@ import app.cash.turbine.test
 import com.example.controlepet.model.Agenda
 import com.example.controlepet.model.AgendaCompleta
 import com.example.controlepet.model.Pet
-import com.example.controlepet.screens.agenda.ListAgendaViewModel
+import com.example.controlepet.viewModel.agenda.ListAgendaViewModel
 import com.example.controlepet.test.FakeAgendaRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -73,7 +73,7 @@ class ListAgendaViewModelTest {
     fun `agendaList should emit empty list`() = runTest {
         fakeRepository = FakeAgendaRepository(fixedTime)
         viewModel = ListAgendaViewModel(fakeRepository)
-        viewModel.agendaList.test {
+        viewModel.agendaLista.test {
             assertEquals(emptyList<AgendaCompleta>(), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
@@ -86,7 +86,7 @@ class ListAgendaViewModelTest {
         fakeRepository = FakeAgendaRepository( fixedTime, listOf(agenda1, agenda2))
         viewModel = ListAgendaViewModel(fakeRepository)
 
-        viewModel.agendaList.test {
+        viewModel.agendaLista.test {
 
             //inicia com uma lista vazia
             val initialList = awaitItem()

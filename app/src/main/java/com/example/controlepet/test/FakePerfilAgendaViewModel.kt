@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.controlepet.model.Agenda
 import com.example.controlepet.model.AgendaCompleta
 import com.example.controlepet.model.Pet
-import com.example.controlepet.screens.agenda.PerfilAgendaViewModel
+import com.example.controlepet.viewModel.agenda.PerfilAgendaViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update

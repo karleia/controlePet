@@ -1,6 +1,5 @@
 package com.example.controlepet.screens.pets
 
-import android.net.Uri
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -40,6 +39,7 @@ import com.example.controlepet.helpers.pet.PetViewModelFactory
 import com.example.controlepet.helpers.provideViewModel
 import com.example.controlepet.repository.OfflineClientRepository
 import com.example.controlepet.repository.OfflinePetRepository
+import com.example.controlepet.viewModel.pets.PetViewModel
 
 @Composable
 fun PetScreen(

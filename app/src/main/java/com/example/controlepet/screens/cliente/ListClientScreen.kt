@@ -1,4 +1,4 @@
-package com.example.controlepet.screens.pets
+package com.example.controlepet.screens.cliente
 
 import android.widget.Toast
 import androidx.compose.foundation.clickable
@@ -45,19 +45,19 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation.NavController
 import com.example.controlepet.base.Routes
-import com.example.controlepet.viewModel.pets.ListPetViewModel
+import com.example.controlepet.viewModel.cliente.ListClientViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ListPetScreen(
+fun ListClientScreen(
     paddingValues: PaddingValues,
     navController: NavController,
-    viewModel: ListPetViewModel
+    viewModel: ListClientViewModel
 )
 {
-    val pets by viewModel.petList.collectAsState()
+    val clients by viewModel.clientList.collectAsState()
     val showDialog by viewModel.showDialog.collectAsState()
-    var petSelected by remember { mutableStateOf(0) }
+    var clientSelected by remember { mutableStateOf(0) }
 
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -70,11 +70,11 @@ fun ListPetScreen(
 
     LazyColumn(
         modifier = Modifier.fillMaxSize()
-            .padding(paddingValues)
+                .padding(paddingValues)
             .padding(16.dp)
             .fillMaxWidth()
     ) {
-        items(items = pets, key = { it.pet.id }) { pet ->
+        items(items = clients, key = { it.id }) { client ->
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -82,10 +82,9 @@ fun ListPetScreen(
                 elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    Text("Nome: ${pet.pet.name}", style = MaterialTheme.typography.titleMedium)
-                    Text("Raça: ${pet.pet.breed}", style = MaterialTheme.typography.titleMedium)
-                    Text("Tipo: ${pet.pet.typePet}", style = MaterialTheme.typography.titleMedium)
-                    Text("Cliente: ${pet.clientName}", style = MaterialTheme.typography.titleMedium)
+                    Text("Nome: ${client.name}", style = MaterialTheme.typography.titleMedium)
+                    Text("E-mail: ${client.email}", style = MaterialTheme.typography.bodyMedium)
+                    Text("Endereço: ${client.address}", style = MaterialTheme.typography.bodySmall)
 
                     Spacer(modifier = Modifier.height(8.dp))
 
@@ -96,7 +95,7 @@ fun ListPetScreen(
                             Icons.Default.Visibility,
                             contentDescription = "",
                             modifier = Modifier.clickable {
-                                navController.navigate("PerfilPetScreen/${pet.pet.id}")
+                                navController.navigate("PerfilClientScreen/${client.id}")
                             }
                         )
                         Spacer(modifier = Modifier.width(10.dp))
@@ -104,7 +103,7 @@ fun ListPetScreen(
                             Icons.Default.Edit,
                             contentDescription = "",
                             modifier = Modifier.clickable {
-                                navController.navigate("PetScreen/${pet.pet.id}")
+                                navController.navigate("ClientScreen/${client.id}")
                             }
                         )
                         Spacer(modifier = Modifier.width(10.dp))
@@ -112,8 +111,8 @@ fun ListPetScreen(
                             Icons.Default.Delete,
                             contentDescription = "",
                             modifier = Modifier.clickable {
-                                petSelected = pet.pet.id
-                                viewModel.setShowDialog(true)
+                                 clientSelected = client.id
+                                 viewModel.setShowDialog(true)
                             }
                         )
                         Spacer(modifier = Modifier.width(10.dp))
@@ -130,7 +129,7 @@ fun ListPetScreen(
             .padding(paddingValues),
         contentAlignment = Alignment.BottomEnd
     ) {
-        FloatingActionButton(onClick = {  navController.navigate(Routes.PetScreen.withId(0))
+        FloatingActionButton(onClick = {  navController.navigate(Routes.ClientScreen.withId(0))
         }) {
             Icon(Icons.Default.Add, contentDescription = "")
         }
@@ -140,11 +139,11 @@ fun ListPetScreen(
     if (showDialog) {
         AlertDialog(
             onDismissRequest = { viewModel.setShowDialog(false) },
-            title = { Text("Confirmar Exclusão do pet") },
-            text = { Text("Deseja realmente excluir este pet?") },
+            title = { Text("Confirmar Exclusão do cliente") },
+            text = { Text("Deseja realmente excluir este cliente?") },
             confirmButton = {
                 TextButton(onClick = {
-                    viewModel.onDelete(petSelected)
+                    viewModel.onDelete(clientSelected)
                     viewModel.setShowDialog(false)
                 }) {
                     Text("Excluir", color = Color.Red)

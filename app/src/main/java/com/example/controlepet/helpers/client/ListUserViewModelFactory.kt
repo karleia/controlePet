@@ -3,7 +3,7 @@ package com.example.controlepet.helpers.client
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.controlepet.repository.OfflineClientRepository
-import com.example.controlepet.screens.client.ListClientViewModel
+import com.example.controlepet.viewModel.cliente.ListClientViewModel
 
 class ListClientViewModelFactory(
     private val repository: OfflineClientRepository

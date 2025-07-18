@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.controlepet.dataBase.UserPreferences
 import com.example.controlepet.repository.OfflineUserRepository
-import com.example.controlepet.screens.registerUser.PerfilUserViewModel
+import com.example.controlepet.viewModel.cadastroUsuario.PerfilUserViewModel
 
 class UserViewModelFactory(
     private val repository: OfflineUserRepository,

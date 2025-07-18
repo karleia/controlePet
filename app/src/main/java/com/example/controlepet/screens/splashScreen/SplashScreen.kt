@@ -17,7 +17,7 @@ import com.example.controlepet.dataBase.AppDatabase
 import com.example.controlepet.dataBase.UserPreferences
 import com.example.controlepet.helpers.user.UserViewModelFactory
 import com.example.controlepet.repository.OfflineUserRepository
-import com.example.controlepet.screens.registerUser.PerfilUserViewModel
+import com.example.controlepet.viewModel.cadastroUsuario.PerfilUserViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
 

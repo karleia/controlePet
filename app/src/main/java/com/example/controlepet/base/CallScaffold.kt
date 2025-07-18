@@ -24,26 +24,27 @@ import com.example.controlepet.repository.OfflineServiceRepository
 import com.example.controlepet.repository.OfflineUserRepository
 import com.example.controlepet.screens.agenda.AgendaScreen
 import com.example.controlepet.screens.agenda.ListAgendaScreen
-import com.example.controlepet.screens.agenda.ListAgendaViewModel
-import com.example.controlepet.screens.client.ClientScreen
-import com.example.controlepet.screens.client.ListClientScreen
-import com.example.controlepet.screens.client.ListClientViewModel
-import com.example.controlepet.screens.client.PerfilClientScreen
+import com.example.controlepet.viewModel.agenda.ListAgendaViewModel
+import com.example.controlepet.screens.cliente.ClientScreen
+import com.example.controlepet.screens.cliente.ListClientScreen
+import com.example.controlepet.viewModel.cliente.ListClientViewModel
+import com.example.controlepet.screens.cliente.PerfilClientScreen
 import com.example.controlepet.screens.login.LoginScreen
 import com.example.controlepet.screens.pets.ListPetScreen
-import com.example.controlepet.screens.pets.ListPetViewModel
+import com.example.controlepet.viewModel.pets.ListPetViewModel
 import com.example.controlepet.screens.pets.PerfilPetScreen
 import com.example.controlepet.screens.pets.PetScreen
-import com.example.controlepet.screens.registerUser.ListUserScreen
-import com.example.controlepet.screens.registerUser.ListUserViewModel
-import com.example.controlepet.screens.registerUser.PerfilUserScreen
-import com.example.controlepet.screens.registerUser.PerfilUserViewModel
-import com.example.controlepet.screens.registerUser.UserScreen
-import com.example.controlepet.screens.services.ListServiceScreen
-import com.example.controlepet.screens.services.ListServiceViewModel
-import com.example.controlepet.screens.services.ServicesScreen
+import com.example.controlepet.screens.cadastroUsuario.ListUserScreen
+import com.example.controlepet.viewModel.cadastroUsuario.ListUserViewModel
+import com.example.controlepet.screens.cadastroUsuario.PerfilUserScreen
+import com.example.controlepet.viewModel.cadastroUsuario.PerfilUserViewModel
+import com.example.controlepet.screens.cadastroUsuario.UserScreen
+import com.example.controlepet.screens.servicos.ListServiceScreen
+import com.example.controlepet.viewModel.servicos.ListServiceViewModel
+import com.example.controlepet.screens.servicos.ServicesScreen
 import com.example.controlepet.screens.agenda.PerfilAgendaScreen
-import com.example.controlepet.screens.agenda.PerfilAgendaViewModel
+import com.example.controlepet.viewModel.agenda.AgendaViewModel
+import com.example.controlepet.viewModel.agenda.PerfilAgendaViewModel
 
 
 class CallScaffold(val navController: NavController) {
@@ -52,6 +53,7 @@ class CallScaffold(val navController: NavController) {
     @Composable
     fun CreateScreen (screen: String, idEdit: Int? = null) {
 
+        val context = LocalContext.current
         val showBottomBar = screen in BottomNavItem.items.map { it.route }
 
         Scaffold(
@@ -140,7 +142,6 @@ class CallScaffold(val navController: NavController) {
                     UserScreen(padding, navController, userIdToEdit = idEdit ?: 0)
                 }
                 Routes.ListUserScreen.route -> {
-                    val context = LocalContext.current
                     val db = remember { AppDatabase.getDatabase(context) }
                     val repo = remember { OfflineUserRepository(db.UserDAO()) }
                     val factory = remember { ListUserViewModelFactory(repo) }
@@ -148,7 +149,6 @@ class CallScaffold(val navController: NavController) {
                     ListUserScreen(padding, navController, viewModel)
                 }
                 Routes.PerfilUserScreen.route -> {
-                    val context = LocalContext.current
                     val db = remember { AppDatabase.getDatabase(context) }
                     val repo = remember { OfflineUserRepository(db.UserDAO()) }
                     val prefs = remember { UserPreferences(context) }
@@ -158,7 +158,6 @@ class CallScaffold(val navController: NavController) {
                 }
 
                 Routes.ListClientScreen.route -> {
-                    val context = LocalContext.current
                     val db = remember { AppDatabase.getDatabase(context) }
                     val repo = remember { OfflineClientRepository(db.ClientDAO()) }
                     val factory = remember { ListClientViewModelFactory(repo) }
@@ -175,7 +174,6 @@ class CallScaffold(val navController: NavController) {
                     ServicesScreen(padding, navController, serviceIdToEdit = idEdit ?: 0)
                 }
                 Routes.ListServiceScreen.route -> {
-                    val context = LocalContext.current
                     val db = remember { AppDatabase.getDatabase(context) }
                     val repo = remember { OfflineServiceRepository(db.ServiceDAO()) }
                     val factory = remember { ServiceViewModelFactory(repo, 0) }
@@ -184,7 +182,6 @@ class CallScaffold(val navController: NavController) {
                 }
 
                 Routes.ListPetScreen.route -> {
-                    val context = LocalContext.current
                     val db = remember { AppDatabase.getDatabase(context) }
                     val repo = remember { OfflinePetRepository(db.PetDAO()) }
                     val repoClient = remember { OfflineClientRepository(db.ClientDAO()) }
@@ -200,10 +197,13 @@ class CallScaffold(val navController: NavController) {
                 }
 
                 Routes.AgendaScreen.route -> {
-                    AgendaScreen(padding, navController, agendaIdToEdit = idEdit ?: 0)
+                    val db = remember { AppDatabase.getDatabase(context) }
+                    val repo = remember { OfflineAgendaRepository(db.AgendaDAO()) }
+                    val factory = remember { AgendaViewModelFactory(repo, 0) }
+                    val viewModel: AgendaViewModel = viewModel(factory = factory)
+                    AgendaScreen(padding, navController, agendaIdToEdit = idEdit ?: 0, viewModel)
                 }
                 Routes.PerfilAgendaScreen.route -> {
-                    val context = LocalContext.current
                     val db = remember { AppDatabase.getDatabase(context) }
                     val repo = remember { OfflineAgendaRepository(db.AgendaDAO()) }
                     val factory = remember { AgendaViewModelFactory(repo, 0) }
@@ -211,7 +211,6 @@ class CallScaffold(val navController: NavController) {
                     PerfilAgendaScreen(padding, navController, agendaId = idEdit ?: 0, viewModel)
                 }
                 Routes.ListAgendaScreen.route -> {
-                    val context = LocalContext.current
                     val db = remember { AppDatabase.getDatabase(context) }
                     val repo = remember { OfflineAgendaRepository(db.AgendaDAO()) }
                     val factory = remember { AgendaViewModelFactory(repo, 0) }

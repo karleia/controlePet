@@ -5,7 +5,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.controlepet.dataBase.AppDatabase
 import com.example.controlepet.repository.OfflineClientRepository
-import com.example.controlepet.screens.client.ClientViewModel
+import com.example.controlepet.viewModel.cliente.ClientViewModel
 
 @Composable
 fun provideClientViewModel(clientId: Int = 0): ClientViewModel {

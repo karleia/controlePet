@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.controlepet.repository.OfflineClientRepository
 import com.example.controlepet.repository.OfflinePetRepository
-import com.example.controlepet.screens.pets.ListPetViewModel
-import com.example.controlepet.screens.pets.PerfilPetViewModel
-import com.example.controlepet.screens.pets.PetViewModel
+import com.example.controlepet.viewModel.pets.ListPetViewModel
+import com.example.controlepet.viewModel.pets.PerfilPetViewModel
+import com.example.controlepet.viewModel.pets.PetViewModel
 
 class PetViewModelFactory(
     private val repository: OfflinePetRepository,

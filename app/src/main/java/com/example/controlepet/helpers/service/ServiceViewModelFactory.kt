@@ -3,8 +3,8 @@ package com.example.controlepet.helpers.service
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.controlepet.repository.OfflineServiceRepository
-import com.example.controlepet.screens.services.ListServiceViewModel
-import com.example.controlepet.screens.services.ServiceViewModel
+import com.example.controlepet.viewModel.servicos.ListServiceViewModel
+import com.example.controlepet.viewModel.servicos.ServiceViewModel
 
 class ServiceViewModelFactory(
     private val repository: OfflineServiceRepository,

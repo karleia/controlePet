@@ -42,9 +42,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation.NavController
 import com.example.controlepet.base.Routes
+import com.example.controlepet.viewModel.agenda.ListAgendaViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -57,7 +57,7 @@ fun ListAgendaScreen(
     viewModel: ListAgendaViewModel
 )
 {
-    val agenda by viewModel.agendaList.collectAsState()
+    val listaAgenda by viewModel.agendaLista.collectAsState()
     val showDialog by viewModel.showDialog.collectAsState()
     var agendaSelected by remember { mutableStateOf(0) }
 
@@ -75,7 +75,7 @@ fun ListAgendaScreen(
             .padding(16.dp)
             .fillMaxWidth()
     ) {
-        items(items = agenda, key = { it.agenda.id }) { item ->
+        items(items = listaAgenda, key = { it.agenda.id }) { item ->
 
             val agendaItem = item.agenda
             val pet = item.pet
