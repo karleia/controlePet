@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
@@ -33,6 +34,7 @@ fun PasswordFields (
     repeatPassword: String,
     onPasswordChange: (String) -> Unit,
     onRepeatPasswordChange: (String) -> Unit,
+    repeat: Boolean = false
 ){
     var passwordVisible by remember { mutableStateOf(false) }
     var repeatPasswordVisible by remember { mutableStateOf(false) }
@@ -48,6 +50,7 @@ fun PasswordFields (
             label = { Text(text = "Senha") },
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             placeholder = { Text(text = "Senha", Modifier.alpha(0.3f)) },
+            leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
             trailingIcon = {
                 IconButton(onClick = { passwordVisible = !passwordVisible }) {
                     Icon(
@@ -60,35 +63,37 @@ fun PasswordFields (
             modifier = Modifier.fillMaxWidth(),
         )
 
-        OutlinedTextField(
-            value = repeatPassword,
-            onValueChange = {
-                onRepeatPasswordChange(it)
-                showMismatchError = password.isNotEmpty() && password != it
-            },
-            label = { Text(text = "Repita a senha ") },
-            visualTransformation = if (repeatPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-            placeholder = { Text(text = "Repita a Senha", Modifier.alpha(0.3f)) },
-            trailingIcon = {
-                IconButton(onClick = { repeatPasswordVisible = !repeatPasswordVisible }) {
-                    Icon(
-                        imageVector = if (repeatPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                        contentDescription = if (repeatPasswordVisible) "Ocultar senha" else "Mostrar senha"
-                    )
-                }
-            },
-            isError = showMismatchError,
-            modifier = Modifier.fillMaxWidth(),
-        )
-
-        if (showMismatchError) {
-            Text(
-                text = "As senhas não coincidem",
-                color = Color.Red,
-                style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.padding(top = 4.dp)
+        if(repeat) {
+            OutlinedTextField(
+                value = repeatPassword,
+                onValueChange = {
+                    onRepeatPasswordChange(it)
+                    showMismatchError = password.isNotEmpty() && password != it
+                },
+                label = { Text(text = "Repita a senha ") },
+                visualTransformation = if (repeatPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                placeholder = { Text(text = "Repita a Senha", Modifier.alpha(0.3f)) },
+                leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
+                trailingIcon = {
+                    IconButton(onClick = { repeatPasswordVisible = !repeatPasswordVisible }) {
+                        Icon(
+                            imageVector = if (repeatPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                            contentDescription = if (repeatPasswordVisible) "Ocultar senha" else "Mostrar senha"
+                        )
+                    }
+                },
+                isError = showMismatchError,
+                modifier = Modifier.fillMaxWidth(),
             )
+
+            if (showMismatchError) {
+                Text(
+                    text = "As senhas não coincidem",
+                    color = Color.Red,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.padding(top = 4.dp)
+                )
+            }
         }
     }
-
 }

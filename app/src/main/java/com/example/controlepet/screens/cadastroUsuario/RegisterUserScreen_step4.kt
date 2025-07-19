@@ -12,7 +12,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -78,6 +81,7 @@ fun RegisterUserScreen_step4(
             modifier = Modifier
                 .fillMaxWidth(),
             label = { Text(text = "E-mail") },
+            leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
             placeholder = { Text(text = "E-mail", Modifier.alpha(0.3f)) }
         )
 
@@ -85,7 +89,8 @@ fun RegisterUserScreen_step4(
             password = vm.password,
             repeatPassword = repeatPassword,
             onPasswordChange = { vm.password = it },
-            onRepeatPasswordChange = { repeatPassword = it }
+            onRepeatPasswordChange = { repeatPassword = it },
+            repeat = true
         )
 
         Box(

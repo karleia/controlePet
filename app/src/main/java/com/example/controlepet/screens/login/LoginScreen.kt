@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.controlepet.base.Routes
+import com.example.controlepet.components.PasswordFields
 import com.example.controlepet.dataBase.AppDatabase
 import com.example.controlepet.dataBase.UserPreferences
 import com.example.controlepet.helpers.LoginViewModelFactory
@@ -89,21 +90,16 @@ fun LoginScreen(paddingValues: PaddingValues, navController: NavController) {
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
+
             Spacer(modifier = Modifier.height(12.dp))
-            OutlinedTextField(
-                value = vm.password,
-                onValueChange = { vm.password = it },
-                label = { Text("Senha") },
-                leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
-                trailingIcon = {
-                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                        val icon =
-                            if (passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff
-                        Icon(icon, contentDescription = null)
-                    }
-                },
-                modifier = Modifier.fillMaxWidth()
+
+            PasswordFields(
+                password = vm.password,
+                repeatPassword = "",
+                onPasswordChange = { vm.password = it },
+                onRepeatPasswordChange = { },
             )
+
             Spacer(modifier = Modifier.height(12.dp))
             vm.errorMessage?.let {
                 Text(it, color = Color.Red)
