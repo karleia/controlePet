@@ -112,7 +112,6 @@ class ListAgendaViewModelTest {
         testDispatcher.scheduler.advanceUntilIdle()
 
         viewModel.onDelete(1)
-
         // Avança o tempo
         testDispatcher.scheduler.advanceUntilIdle()
 

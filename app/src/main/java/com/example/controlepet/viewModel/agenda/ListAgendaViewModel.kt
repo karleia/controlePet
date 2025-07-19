@@ -22,8 +22,8 @@ class ListAgendaViewModel(
     val agendaLista: StateFlow<List<AgendaCompleta>> = repo.getAllAgendasCompletas()
         .stateIn(viewModelScope, SharingStarted.Companion.WhileSubscribed(5000), emptyList())
 
-    private val _toastMessage = MutableSharedFlow<String>(replay = 1)
-    val toastMessage = _toastMessage.asSharedFlow()
+    private val _toastMessageFlow = MutableSharedFlow<String>(replay = 1)
+    val toastMessage = _toastMessageFlow.asSharedFlow()
 
     private var _showDialog = MutableStateFlow(false)
     val showDialog: StateFlow<Boolean> = _showDialog
@@ -36,11 +36,15 @@ class ListAgendaViewModel(
         viewModelScope.launch(dispatcher) {
             try {
                 repo.deleteAgendaById(agendaId)
-                _toastMessage.emit("Agenda excluída com sucesso")
+                _toastMessageFlow.emit(MENSAGEM_SUCESSO)
             } catch (e: Exception) {
-                _toastMessage.emit("Erro ao excluir: ${e.localizedMessage}")
+                _toastMessageFlow.emit("$MENSAGEM_ERRO: ${e.localizedMessage}")
             }
         }
+    }
 
+    companion object {
+        private const val MENSAGEM_SUCESSO = "Agenda excluída com sucesso"
+        private const val MENSAGEM_ERRO = "Erro ao excluir"
     }
 }

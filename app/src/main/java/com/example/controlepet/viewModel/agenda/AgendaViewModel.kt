@@ -27,6 +27,10 @@ class AgendaViewModel(
     private val repo: AgendaRepository,
 ): ViewModel() {
 
+    companion object {
+        private const val NOVO_ID = 0
+    }
+
     val listaPets: StateFlow<List<PetWithClientName>> =
         repo.getAllPetsWithClientName()
             .stateIn(viewModelScope, SharingStarted.Companion.WhileSubscribed(5_000), emptyList())
@@ -50,14 +54,16 @@ class AgendaViewModel(
     private val _agendaCompleta = MutableStateFlow<AgendaCompleta?>(null)
     val agendaCompleta: StateFlow<AgendaCompleta?> = _agendaCompleta
 
+    //save agenda salva novos dados quando NOVO_ID for 0
+    //editar os dados quando for passado o editingId
     fun saveAgenda(servicos: List<ServiceSelecionado>, petId: Int) {
         viewModelScope.launch {
             try {
                 val novaAgenda = Agenda(
-                    id = editingId ?: 0, // 0 se for novo
+                    id = editingId ?: NOVO_ID, // 0 se for novo
                     idPet = petId,
                     date_time = dataHoraSelecionada,
-                    createdAt = getHoraAtual()
+                    createdAt = obterTimestampAtual()
                 )
 
                 val listaAgendaServices = servicos.map {
@@ -74,10 +80,10 @@ class AgendaViewModel(
                 } else {
                     repo.insertAgendaWithServices(novaAgenda, listaAgendaServices)
                 }
-
                 isSuccess = true
             }
             catch ( e: Exception ) {
+                errorMessage = "Erro ao salvar a agenda: ${e.localizedMessage}"
                 Log.e("Register", "Erro ao cadastrar", e)
             }
         }
@@ -90,16 +96,7 @@ class AgendaViewModel(
         }
     }
 
-    fun formatData(): Long {
-        val dataHoraString = "$data $hora"
-        val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
-
-        val date: Date? = formatter.parse(dataHoraString)
-        val date_time: Long = date?.time ?: System.currentTimeMillis()
-        return date_time
-    }
-
-    fun getHoraAtual(): Long {
+    fun obterTimestampAtual(): Long {
         val agora = Date()
         val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
         return formatter.parse(formatter.format(agora))?.time ?: System.currentTimeMillis()

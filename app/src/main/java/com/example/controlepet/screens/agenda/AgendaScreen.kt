@@ -66,10 +66,6 @@ fun AgendaScreen(
     vm: AgendaViewModel
 ) {
     val context = LocalContext.current
-    /*val db = remember { AppDatabase.getDatabase(context) }
-    val repo = remember { OfflineAgendaRepository(db.AgendaDAO()) }
-    val factory = remember {  AgendaViewModelFactory(repo, agendaIdToEdit) }
-    val vm: AgendaViewModel = provideViewModel(factory)*/
 
     //para o dropdow mostrar o nome do pet com o nome do dono no formato (pet - dono)
     val pets by vm.listaPets.collectAsState()
@@ -96,6 +92,9 @@ fun AgendaScreen(
     //mensagem de sucesso
     val isSuccess = vm.isSuccess
 
+    //observar o erro na tela
+    val errorMessage = vm.errorMessage
+
     //formatar a data e a hora
     var timestampSelecionado = vm.dataHoraSelecionada
 
@@ -118,6 +117,14 @@ fun AgendaScreen(
         }
      }
 
+    LaunchedEffect(errorMessage) {
+        errorMessage?.let {
+            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+            vm.errorMessage = null
+        }
+    }
+
+    //carregar os dodos para edicao se conter o agendaIdToEdit
    LaunchedEffect(agendaEditando) {
         agendaEditando?.let {
             val pet = "${it.pet.name} - ${it.clientName }"

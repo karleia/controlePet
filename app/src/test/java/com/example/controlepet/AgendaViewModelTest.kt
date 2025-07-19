@@ -58,7 +58,7 @@ class AgendaViewModelTest {
         viewModel.isSuccess = false
 
         val servicosSelecionados = listOf(
-            ServiceSelecionado(idService = 1, name = "banhi", price = 100.0),
+            ServiceSelecionado(idService = 1, name = "banho", price = 100.0),
             ServiceSelecionado(idService = 2, name = "tosa", price = 150.0)
         )
 
@@ -66,15 +66,6 @@ class AgendaViewModelTest {
         testDispatcher.scheduler.advanceUntilIdle()
 
         assertTrue(viewModel.isSuccess)
-    }
-
-    @Test
-    fun `formatData should return expected timestamp`() {
-        viewModel.data = "18/07/2025"
-        viewModel.hora = "15:30"
-
-        val timestamp = viewModel.formatData()
-        assertTrue(timestamp > 0)
     }
 
     companion object {

@@ -44,43 +44,13 @@ class FakeAgendaRepository(
 
     override fun getAllService(): Flow<List<Service>> = flowOf(emptyList())
 
-    /*override suspend fun getAgendaCompleta(agendaId: Int): AgendaCompleta? {
-        return AgendaCompleta(
-            agenda = Agenda(
-                id = agendaId,
-                idPet = 1,
-                date_time = fixedTime,
-                createdAt = fixedTime,
-                observation = "Teste"
-            ),
-            pet = Pet(
-                id = 1,
-                clientId = 1,
-                name = "Mock Pet",
-                typePet = "cachorro",
-                breed = "Pincher",
-                color = "preto",
-                pelagem = "curta",
-                sex = "femea",
-                observation = "Nenhuma"
-            ),
-            clientName = "Cliente Mock",
-            servicosSelecionados = listOf()
-        )
-    }*/
-
     override suspend fun getAgendaCompleta(agendaId: Int): AgendaCompleta? {
         return agendasMock.find { it.agenda.id == agendaId }
     }
 
-    /*override fun getAllAgendasCompletas(): Flow<List<AgendaCompleta>> {
-        return flowOf(
-            agendasMock.filterNot { deletedIds.contains(it.agenda.id) }
-        )
-    }*/
     override fun getAllAgendasCompletas(): Flow<List<AgendaCompleta>> = agendasFlow
 
     override suspend fun updateAgendaWithServices(agenda: Agenda, servicos: List<AgendaServices>) {
-        // não implementado para testes simples
+
     }
 }
